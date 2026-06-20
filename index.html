@@ -543,6 +543,75 @@
 
     /* GSAP estado inicial — reveals genéricos */
     .gs { opacity: 0; transform: translateY(44px); }
+
+    /* ============================================================
+       MOBILE — overrides globales (max-width: 767px)
+    ============================================================ */
+    @media (max-width: 767px) {
+
+      /* Deshabilitar sticky en secciones — en mobile el contenido largo
+         quedaría cortado detrás de la siguiente sección */
+      .section-card {
+        position: relative !important;
+        border-radius: 0 !important;
+        transform: none !important; /* anula el scale de GSAP */
+      }
+
+      /* Reducir paddings generales de sección */
+      .diferenciales     { padding: 3.5rem 0 !important; }
+      .section-card.proceso { padding: 3.5rem 0 4rem !important; }
+      .proceso-intro     { margin-bottom: 3rem; }
+      .proceso-intro h2  { font-size: 1.9rem; }
+
+      /* Modelos */
+      .modelos-section   { padding: 3.5rem 0 3rem !important; border-radius: 0 !important; }
+      .modelos-intro     { margin-bottom: 3rem; }
+      .modelo-row        { gap: 1.75rem; padding: 3rem 0 !important; }
+      .mr-name           { font-size: clamp(2.4rem,11vw,3.2rem); }
+      .mr-desc           { font-size: .9rem; }
+      .mr-price-val      { font-size: 1.5rem; }
+      .mr-price-row      { gap: 1rem; }
+
+      /* Hero ajustes extra */
+      .hero-content      { padding: 1.25rem 1.25rem 1.5rem !important; }
+      .hero-badge        { font-size: .72rem; margin-bottom: 1.25rem; }
+      .hero-sub          { font-size: .9rem; }
+      .hero-ctas         { gap: .6rem; }
+      .hero-ctas .btn    { font-size: .9rem !important; padding: .8rem 1.4rem !important; }
+
+      /* Diferenciales grid — 1 col en <480px ya está, solo ajuste de gap */
+      .dif-grid          { gap: .875rem; }
+      .dif-card          { padding: 1.5rem 1.25rem; border-radius: 1.1rem; }
+      .dif-intro         { margin-bottom: 2.5rem; }
+
+      /* Prueba social */
+      .testimonios-grid  { grid-template-columns: 1fr !important; }
+
+      /* Stats */
+      .stats-row         { grid-template-columns: 1fr 1fr !important; gap: 1rem !important; }
+
+      /* Footer */
+      .footer-grid       { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+
+      /* WhatsApp fab — solo ícono en mobile */
+      .wa-fab            { padding: .85rem; border-radius: 50%; }
+      .wa-fab-text       { display: none !important; }
+
+      /* Galería — 2 columnas simples en mobile */
+      .gal-grid {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: auto !important;
+      }
+      .gal-item:nth-child(1),
+      .gal-item:nth-child(4) {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+      }
+      .gal-img { height: 140px !important; }
+
+      /* CTA final */
+      .cta-final         { padding: 4rem 0 !important; }
+    }
   </style>
 </head>
 <body>
@@ -1125,39 +1194,26 @@
     })();
 
     // ============================================================
-    // SECTION STACK — superposición entre secciones
-    // modelos-section no es sticky (para que los 3 modelos scrolleen
-    // normalmente), pero igual se escala cuando diferenciales la cubre.
+    // SECTION STACK — solo en desktop (en mobile las secciones fluyen normal)
     // ============================================================
-    const modElem  = document.querySelector('.modelos-section');
-    const difElem  = document.querySelector('.diferenciales');
+    if (window.innerWidth >= 768) {
+      const modElem = document.querySelector('.modelos-section');
+      const difElem = document.querySelector('.diferenciales');
 
-    // Modelos se achica cuando diferenciales entra por abajo
-    gsap.to(modElem, {
-      scale: 0.93, ease: 'none',
-      scrollTrigger: {
-        trigger: difElem,
-        start: 'top bottom',
-        end:   'top top+=1',
-        scrub: true,
-      }
-    });
-
-    // El resto de section-card se apila entre sí
-    gsap.utils.toArray('.section-card').forEach((el, i, arr) => {
-      const next = arr[i + 1];
-      if (!next) return;
-      gsap.to(el, {
-        scale: 0.93,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: next,
-          start: 'top bottom',
-          end:   'top top+=1',
-          scrub: true,
-        }
+      gsap.to(modElem, {
+        scale: 0.93, ease: 'none',
+        scrollTrigger: { trigger: difElem, start: 'top bottom', end: 'top top+=1', scrub: true }
       });
-    });
+
+      gsap.utils.toArray('.section-card').forEach((el, i, arr) => {
+        const next = arr[i + 1];
+        if (!next) return;
+        gsap.to(el, {
+          scale: 0.93, ease: 'none',
+          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top+=1', scrub: true }
+        });
+      });
+    }
 
     // ============================================================
     // UTILIDADES — efectos de texto

@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Patagona Home — Módulos habitacionales plegables. Viviendas, oficinas y ampliaciones. Representante oficial, entrega en toda Argentina.">
+  <title>Patagona Home — Módulos Habitacionales Plegables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       RESET & VARIABLES
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #080808;
+      --dark:   #0f0f0f;
+      --card:   #161616;
+      --card2:  #1d1d1d;
+      --white:  #ffffff;
+      --grey:   #767676;
+      --glt:    rgba(255,255,255,.55);
+      --blue:   #0099FF;
+      --bdim:   rgba(0,153,255,.14);
+      --bglo:   rgba(0,153,255,.32);
+      --border: rgba(255,255,255,.07);
+      --brd2:   rgba(255,255,255,.12);
+      --font:   'Space Grotesk', sans-serif;
+    }
+    html { font-size: 16px; scroll-behavior: auto; }
+    body { background: var(--black); color: var(--white); font-family: var(--font); line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a   { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul  { list-style: none; }
+
+    /* ============================================================
+       UTILIDADES
+    ============================================================ */
+    .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 1.25rem; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .72rem; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 1rem;
+    }
+    .eyebrow::before { content: ''; display: block; width: 1.5rem; height: 2px; background: var(--blue); border-radius: 2px; }
+
+    .sec-title { font-size: clamp(2rem,5vw,3.5rem); font-weight: 700; line-height: 1.07; letter-spacing: -.03em; margin-bottom: 1rem; }
+    .sec-sub   { font-size: 1.05rem; color: var(--glt); max-width: 540px; line-height: 1.75; }
+    .accent    { color: var(--blue); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .9rem 1.8rem; border-radius: .6rem;
+      font-family: var(--font); font-size: .95rem; font-weight: 600;
+      cursor: pointer; border: none; line-height: 1;
+      transition: transform .22s, box-shadow .22s, background .22s, border-color .22s, color .22s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: #22aaff; box-shadow: 0 0 28px var(--bglo); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.18); }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 22px var(--bdim); transform: translateY(-2px); }
+
+    /* ============================================================
+       HEADER — cápsula flotante
+    ============================================================ */
+    .header {
+      position: fixed; top: 1.1rem; left: 0; right: 0; z-index: 500;
+      display: flex; justify-content: center; align-items: center;
+      pointer-events: none; /* el área vacía alrededor no bloquea clics */
+    }
+    .header-inner {
+      display: flex; align-items: center; gap: 0;
+      background: rgba(10,10,10,.72);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 9999px;
+      padding: .5rem .5rem .5rem 1.5rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
+      pointer-events: all;
+      transition: background .4s, border-color .4s, box-shadow .4s;
+    }
+    .header.scrolled .header-inner {
+      background: rgba(8,8,8,.92);
+      border-color: rgba(255,255,255,.15);
+      box-shadow: 0 8px 48px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06) inset;
+    }
+    .logo { font-size: 1.2rem; font-weight: 700; letter-spacing: -.03em; flex-shrink: 0; margin-right: 2rem; }
+    .logo span { color: var(--blue); }
+    .nav { display: none; align-items: center; gap: 1.75rem; }
+    .nav a { font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.55); transition: color .2s; white-space: nowrap; }
+    .nav a:hover { color: var(--white); }
+    .hdr-cta { display: none; font-size: .8rem; padding: .55rem 1.1rem; border-radius: 9999px; margin-left: 1.5rem; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: .6rem .75rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 9999px; margin-left: .75rem; }
+    .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--white); border-radius: 2px; transition: all .3s; }
+    @media (min-width: 768px) { .nav { display: flex; } .hdr-cta { display: flex; } .hamburger { display: none; } }
+
+    /* Menú mobile */
+    .mobile-menu { position: fixed; inset: 0; background: rgba(8,8,8,.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 499; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu a { font-size: 1.75rem; font-weight: 700; color: rgba(255,255,255,.65); letter-spacing: -.02em; transition: color .2s; }
+    .mobile-menu a:hover { color: var(--blue); }
+    .mob-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.75rem; color: var(--grey); cursor: pointer; background: none; border: none; transition: color .2s; }
+    .mob-close:hover { color: var(--white); }
+
+    /* ============================================================
+       SECTION CARD — apilamiento entre secciones
+    ============================================================ */
+    .section-card {
+      position: sticky; top: 0;
+      border-radius: 1.75rem 1.75rem 0 0;
+      overflow: hidden;
+      transform-origin: top center;
+      will-change: transform;
+    }
+
+    /* ============================================================
+       SECCIÓN 1: HERO
+    ============================================================ */
+    .hero {
+      position: relative; height: 100svh; min-height: 640px;
+      display: flex; align-items: center;
+      overflow: hidden; z-index: 1;
+    }
+    .hero-bg {
+      position: absolute; inset: -20%;
+      background: linear-gradient(160deg,#020d1a 0%,#041428 25%,#061c38 50%,#020a14 75%,#040c1a 100%);
+      will-change: transform;
+    }
+    .hero-bg::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,153,255,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(0,153,255,.04) 1px,transparent 1px); background-size: 64px 64px; }
+    .hero-bg::after  { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom,rgba(8,8,8,.55) 0%,rgba(8,8,8,.1) 50%,rgba(8,8,8,.4) 100%); }
+
+    /* ── hero-carry: camión + título entran como UNA sola unidad ── */
+    .hero-carry {
+      position: relative; z-index: 2;
+      display: flex; align-items: center;
+      width: 100%; height: 100%;
+      gap: 0;
+    }
+
+    /* Columna izquierda: texto */
+    .hero-content {
+      flex: 1;
+      position: relative; z-index: 2;
+      padding: 0 2rem 0 3.5rem;
+    }
+
+    /* Columna derecha: camión */
+    .hero-truck-col {
+      flex: 0 0 54%;
+      position: relative;
+      align-self: center;
+      perspective: 900px;
+      perspective-origin: center center;
+      pointer-events: none;
+    }
+    #hero-truck {
+      display: block;
+      width: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      filter: drop-shadow(0px 28px 48px rgba(0,0,0,.55)) drop-shadow(0px 8px 16px rgba(0,153,255,.12));
+    }
+
+    .hero-badge { display: inline-flex; align-items: center; gap: .6rem; background: rgba(0,153,255,.1); border: 1px solid rgba(0,153,255,.28); border-radius: 2rem; padding: .45rem 1.1rem; font-size: .78rem; font-weight: 500; color: #66ccff; margin-bottom: 1.75rem; }
+    .hero-badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); display: inline-block; animation: blink 2.2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+    .hero-title { font-size: clamp(2.2rem,5.5vw,5rem); font-weight: 700; line-height: .97; letter-spacing: -.04em; margin-bottom: 1.4rem; }
+    .htl { display: block; }
+    .htw { display: block; }
+    .hero-sub   { font-size: clamp(.92rem,1.7vw,1.1rem); color: rgba(255,255,255,.6); max-width: 440px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .hero-ctas  { display: flex; flex-wrap: wrap; gap: .875rem; }
+
+    /* Mobile: apila — camión arriba, texto abajo */
+    @media (max-width: 767px) {
+      .hero { align-items: flex-start; }
+      .hero-carry { flex-direction: column; gap: 0; padding-top: 5rem; }
+      .hero-truck-col { flex: none; width: 100%; }
+      #hero-truck { width: 108%; margin-left: -4%; }
+      .hero-content { padding: 1.5rem 1.5rem 2rem; width: 100%; }
+      .hero-title { font-size: clamp(2rem,9vw,3.2rem); }
+    }
+    .hero-scroll-hint { position: absolute; bottom: 2.25rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .4rem; z-index: 2; animation: floaty 2.5s ease-in-out infinite; }
+    .hero-scroll-hint span { font-size: .65rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.25); }
+    .hero-scroll-hint svg  { width: 18px; color: rgba(255,255,255,.2); }
+    @keyframes floaty { 0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ============================================================
+       SECCIÓN: PROCESO — línea de tiempo paso a paso
+    ============================================================ */
+    .section-card.proceso { padding: 7rem 0 8rem; }
+    .proceso-intro { text-align: center; margin-bottom: 5rem; }
+    .proceso-intro .sec-label { margin-bottom: .75rem; }
+    .proceso-intro h2 { font-size: clamp(2rem,4.5vw,3.4rem); font-weight:700; letter-spacing:-.03em; }
+    .proceso-intro p { color: rgba(255,255,255,.5); font-size: 1.05rem; margin-top: .75rem; }
+
+    /* Track: línea horizontal de fondo + relleno animado */
+    .proceso-track-wrap {
+      position: absolute;
+      top: calc(2.4rem);   /* centrado verticalmente en los círculos */
+      left: calc(12.5% + 2rem);
+      right: calc(12.5% + 2rem);
+      height: 2px;
+      pointer-events: none;
+    }
+    .proceso-track-bg {
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,.08);
+    }
+    .proceso-track-fill {
+      position: absolute; top:0; left:0; bottom:0;
+      width: 0%;
+      background: var(--blue);
+      box-shadow: 0 0 14px rgba(0,153,255,.6);
+    }
+
+    /* Grid de pasos */
+    .proceso-steps {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 0;
+      position: relative;
+    }
+    .paso {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 1.5rem;
+      opacity: 0; transform: translateY(28px);
+    }
+    .paso-num {
+      width: 4.8rem; height: 4.8rem;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; font-weight: 700; color: rgba(255,255,255,.25);
+      background: var(--black);
+      position: relative; z-index: 2;
+      transition: border-color .5s, color .5s, background .5s, box-shadow .5s;
+      margin-bottom: 1.75rem;
+    }
+    .paso.lit .paso-num {
+      border-color: var(--blue);
+      color: #fff;
+      background: rgba(0,153,255,.15);
+      box-shadow: 0 0 28px rgba(0,153,255,.4), inset 0 0 12px rgba(0,153,255,.1);
+    }
+    .paso-title {
+      font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em;
+      margin-bottom: .5rem; color: rgba(255,255,255,.9);
+    }
+    .paso-desc {
+      font-size: .85rem; color: rgba(255,255,255,.4); line-height: 1.65;
+    }
+
+    @media (max-width: 767px) {
+      .proceso-steps { grid-template-columns: 1fr 1fr; gap: 3rem 1rem; }
+      .proceso-track-wrap { display: none; }
+    }
+
+    /* ============================================================
+       SECCIÓN 2: MODELOS — scroll reveal con efectos de texto
+       Imagen alterna izquierda/derecha, texto con animaciones ricas
+    ============================================================ */
+    .modelos-section {
+      background: var(--black);
+      padding: 7rem 0 6rem;
+      position: relative;          /* fluye normalmente — NO sticky */
+      z-index: 2;
+      border-radius: 1.75rem 1.75rem 0 0;
+      overflow: hidden;
+      transform-origin: top center;
+      will-change: transform;
+    }
+
+    /* Intro de la sección */
+    .modelos-intro { text-align: center; margin-bottom: 6rem; }
+    .modelos-intro .sec-sub { margin: 0 auto; }
+
+    /* ── Cada fila de modelo ── */
+    .modelo-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 'img txt';
+      gap: 5rem;
+      align-items: center;
+      padding: 5.5rem 0;
+      border-top: 1px solid var(--border);
+    }
+    /* Alternar: texto primero, imagen después */
+    .modelo-row.txt-first {
+      grid-template-areas: 'txt img';
+    }
+    .mr-img  { grid-area: img; }
+    .mr-text { grid-area: txt; }
+
+    @media (max-width: 767px) {
+      .modelo-row, .modelo-row.txt-first {
+        grid-template-columns: 1fr;
+        grid-template-areas: 'img' 'txt';
+        gap: 2rem;
+        padding: 3.5rem 0;
+      }
+    }
+
+    /* Imagen de cada modelo */
+    .mr-img-wrap {
+      position: relative;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /*
+      IMÁGENES MODELOS:
+      D (derecha): reemplazar con <img src="img/modelo-d.jpg" alt="Módulo D" style="width:100%;height:100%;object-fit:cover">
+      V (izquierda): <img src="img/modelo-v.jpg" ...>
+      X (derecha): <img src="img/modelo-x.jpg" ...>
+      Resolución sugerida: 900×700px por imagen.
+    */
+    .mr-img-letter {
+      position: absolute; bottom: .5rem; left: 1.25rem;
+      font-size: clamp(5rem,14vw,12rem); font-weight: 700;
+      color: rgba(0,153,255,.1); letter-spacing: -.05em; line-height: 1; user-select: none;
+    }
+    .mr-img-hint { font-size: .7rem; letter-spacing: .12em; color: rgba(255,255,255,.13); text-align: center; }
+
+    /* Número grande de fondo del row */
+    .mr-row-num {
+      position: absolute;
+      top: 50%; right: -0.5rem;
+      transform: translateY(-50%);
+      font-size: clamp(8rem, 18vw, 18rem);
+      font-weight: 700; line-height: 1;
+      color: rgba(255,255,255,.02);
+      letter-spacing: -.05em;
+      pointer-events: none; user-select: none;
+    }
+    .modelo-row { position: relative; }
+
+    /* ── Columna de texto ── */
+    .mr-text { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .mr-counter { font-size: .72rem; font-weight: 600; letter-spacing: .18em; color: var(--blue); text-transform: uppercase; }
+
+    /* Nombre del modelo con clip para slide-up */
+    .mr-name { font-size: clamp(2.8rem,5.5vw,5.5rem); font-weight: 700; line-height: .92; letter-spacing: -.04em; }
+
+    /* Clip de palabra: overflow:hidden para el slide-up effect */
+    .wc  { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .05em; }
+    .wi  { display: inline-block; } /* word-inner — GSAP anima esto */
+
+    /* Subrayado animado */
+    .hl  { position: relative; display: inline-block; }
+    .hl-bar {
+      display: block; position: absolute; bottom: -2px; left: 0;
+      height: 4px; width: 0%;
+      background: linear-gradient(90deg, var(--blue) 0%, #22aaff 100%);
+      border-radius: 3px;
+    }
+
+    .mr-popular { display: inline-flex; align-items: center; gap: .4rem; background: rgba(0,153,255,.12); border: 1px solid rgba(0,153,255,.3); border-radius: 2rem; padding: .3rem .85rem; font-size: .7rem; font-weight: 700; color: var(--blue); letter-spacing: .08em; width: fit-content; }
+
+    .mr-desc { font-size: .95rem; color: var(--glt); line-height: 1.8; max-width: 420px; }
+    /* word-clip para el reveal de la descripción */
+    .mr-desc .wc { padding-bottom: .12em; }
+
+    .mr-specs { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .mr-pill  { background: rgba(255,255,255,.04); border: 1px solid var(--brd2); border-radius: .35rem; padding: .25rem .65rem; font-size: .73rem; color: rgba(255,255,255,.5); }
+
+    .mr-price-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .mr-from      { font-size: .68rem; color: var(--grey); text-transform: uppercase; letter-spacing: .12em; margin-bottom: .1rem; }
+    /* El precio tiene efecto typewriter — empieza vacío, JS lo rellena */
+    .mr-price-val { font-size: 1.8rem; font-weight: 700; color: var(--blue); letter-spacing: -.03em; line-height: 1; min-width: 10ch; }
+
+    /* ============================================================
+       SECCIÓN 3: DIFERENCIALES
+    ============================================================ */
+    .diferenciales { background: var(--dark); padding: 6rem 0; z-index: 3; }
+    .dif-intro { display: grid; gap: 1.5rem; margin-bottom: 3.5rem; }
+    @media (min-width: 768px) { .dif-intro { grid-template-columns: 1fr 1fr; align-items: end; } }
+    .dif-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      perspective: 1200px;
+    }
+    @media (min-width: 480px) { .dif-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .dif-grid { grid-template-columns: repeat(5,1fr); gap: 1.5rem; } }
+
+    .dif-card {
+      background: rgba(255,255,255,.034);
+      padding: 2rem 1.6rem;
+      display: flex; flex-direction: column; gap: 1.1rem;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 1.5rem;
+      position: relative; overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.05) inset,
+        0 12px 40px rgba(0,0,0,.35),
+        0 1px 3px rgba(0,0,0,.4);
+      transition: border-color .35s, box-shadow .35s;
+      cursor: default;
+    }
+    /* Glow que sigue al cursor via --mx/--my */
+    .dif-card::before {
+      content: '';
+      position: absolute; inset: 0; border-radius: inherit;
+      background: radial-gradient(
+        circle at var(--mx,50%) var(--my,50%),
+        rgba(0,153,255,.18) 0%, transparent 65%
+      );
+      opacity: 0; transition: opacity .35s; pointer-events: none;
+    }
+    .dif-card:hover::before { opacity: 1; }
+    .dif-card:hover {
+      border-color: rgba(0,153,255,.28);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.08) inset,
+        0 20px 56px rgba(0,0,0,.45),
+        0 0 0 1px rgba(0,153,255,.12),
+        0 0 32px rgba(0,153,255,.08);
+    }
+    .dif-icon {
+      width: 52px; height: 52px; border-radius: .9rem;
+      background: rgba(0,153,255,.08);
+      border: 1px solid rgba(0,153,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      transition: box-shadow .35s, background .35s;
+    }
+    .dif-card:hover .dif-icon {
+      background: rgba(0,153,255,.14);
+      box-shadow: 0 0 22px rgba(0,153,255,.3);
+    }
+    .dif-name { font-size: .95rem; font-weight: 600; margin-bottom: .15rem; }
+    .dif-desc { font-size: .82rem; color: var(--grey); line-height: 1.65; }
+
+    /* ============================================================
+       SECCIÓN 4: PROCESO
+    ============================================================ */
+    .proceso { background: var(--black); padding: 6rem 0; z-index: 4; }
+    .pasos-grid { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 3.5rem; }
+    @media (min-width: 768px) { .pasos-grid { grid-template-columns: repeat(4,1fr); } }
+    .paso { padding: 2.25rem 0; position: relative; display: flex; flex-direction: column; gap: .75rem; }
+    .paso:not(:last-child) { border-bottom: 1px solid var(--border); }
+    @media (min-width: 768px) { .paso { padding: 0 2rem; } .paso:not(:last-child) { border-bottom: none; border-right: 1px solid var(--border); } .paso:not(:last-child)::after { content:'→'; position:absolute; right:-.75rem; top:1.4rem; font-size:1rem; color:rgba(0,153,255,.35); z-index:1; } }
+    .paso-num   { font-size: 3.5rem; font-weight: 700; line-height: 1; color: rgba(0,153,255,.12); letter-spacing: -.05em; margin-bottom: .5rem; }
+    .paso-emoji { font-size: 1.75rem; }
+    .paso-name  { font-size: 1rem; font-weight: 600; }
+    .paso-text  { font-size: .83rem; color: var(--grey); line-height: 1.7; }
+
+    /* ============================================================
+       SECCIÓN 5: GALERÍA
+    ============================================================ */
+    .galeria { background: var(--dark); padding: 6rem 0; z-index: 5; }
+    .gal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: 2.75rem; }
+    @media (min-width: 768px) { .gal-grid { grid-template-columns: repeat(4,1fr); grid-template-rows: 210px 210px; } .gal-item:nth-child(1) { grid-column: span 2; grid-row: span 2; } .gal-item:nth-child(4) { grid-column: span 2; } }
+    .gal-item { border-radius: .75rem; overflow: hidden; cursor: pointer; position: relative; }
+    /*
+      IMÁGENES GALERÍA:
+      [1] Exterior módulo — 900×900px  [2] Interior living — 450×450px
+      [3] Exterior nocturno — 450×450px  [4] Oficina — 900×400px
+      [5] Detalle fachada — 450×400px  [6] Instalación — 450×400px
+    */
+    .gal-img { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; font-size: .68rem; letter-spacing: .1em; color: rgba(255,255,255,.18); text-align: center; padding: 0 1rem; transition: transform .45s; }
+    @media (min-width: 768px) { .gal-img { height: 100%; } }
+    .gal-item:hover .gal-img { transform: scale(1.05); }
+    .gal-overlay { position: absolute; inset: 0; background: linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 55%); opacity: 0; transition: opacity .3s; display: flex; align-items: flex-end; padding: 1rem 1.1rem; }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+    .gal-tag { font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.9); }
+
+    /* ============================================================
+       SECCIÓN 6: PRUEBA SOCIAL
+    ============================================================ */
+    .social { background: var(--black); padding: 6rem 0; z-index: 6; }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+    @media (min-width: 640px) { .stats-row { grid-template-columns: repeat(4,1fr); } }
+    .stat-box  { text-align: center; }
+    .stat-num  { font-size: clamp(2.2rem,5vw,3.2rem); font-weight: 700; color: var(--blue); letter-spacing: -.04em; line-height: 1; }
+    .stat-label{ font-size: .75rem; color: var(--grey); margin-top: .5rem; text-transform: uppercase; letter-spacing: .1em; }
+    .media-strip  { border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem 2rem; margin-bottom: 4rem; }
+    .media-label  { font-size: .68rem; color: var(--grey); text-transform: uppercase; letter-spacing: .18em; text-align: center; margin-bottom: 1.5rem; }
+    .media-logos  { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.75rem 3rem; }
+    /*
+      LOGOS MEDIOS: reemplazar cada span por <img> PNG blanco (height: 24-28px).
+    */
+    .media-logo   { font-size: .85rem; font-weight: 700; color: rgba(255,255,255,.18); letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
+    .media-logo:hover { color: rgba(255,255,255,.45); }
+    .testimonios-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    @media (min-width: 640px) { .testimonios-grid { grid-template-columns: repeat(3,1fr); } }
+    .testi { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color .25s; }
+    .testi:hover { border-color: rgba(0,153,255,.22); }
+    .testi-stars  { color: var(--blue); font-size: .9rem; letter-spacing: .1em; }
+    .testi-text   { font-size: .875rem; color: rgba(255,255,255,.7); line-height: 1.7; flex: 1; }
+    .testi-author { display: flex; align-items: center; gap: .75rem; }
+    .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#0a2a4a,#0055bb); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem; color: var(--blue); flex-shrink: 0; }
+    .testi-name   { font-size: .85rem; font-weight: 600; }
+    .testi-loc    { font-size: .75rem; color: var(--grey); margin-top: .1rem; }
+
+    /* ============================================================
+       SECCIÓN 7: CTA FINAL
+    ============================================================ */
+    .cta-final { padding: 7rem 0; text-align: center; position: relative; overflow: hidden; background: var(--dark); z-index: 7; }
+    .cta-final::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle,rgba(0,153,255,.07) 0%,transparent 65%); pointer-events: none; }
+    .cta-final .sec-title { max-width: 680px; margin: 0 auto 1.1rem; }
+    .cta-final .sec-sub   { margin: 0 auto 2.75rem; text-align: center; }
+    .cta-btns    { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .cta-address { font-size: .8rem; color: var(--grey); margin-top: 2rem; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer { background: var(--black); border-top: 1px solid var(--border); padding: 3.5rem 0 2rem; position: relative; z-index: 50; }
+    .footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+    @media (min-width: 640px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+    .footer-brand .logo { font-size: 1.2rem; margin-bottom: .75rem; }
+    .footer-brand p { font-size: .83rem; color: var(--grey); line-height: 1.7; max-width: 270px; }
+    .footer-col h4 { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--grey); margin-bottom: 1.25rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: .7rem; }
+    .footer-col a  { font-size: .875rem; color: rgba(255,255,255,.55); transition: color .2s; }
+    .footer-col a:hover { color: var(--blue); }
+    .social-row { display: flex; gap: .65rem; margin-top: 1.25rem; }
+    .soc-btn { width: 38px; height: 38px; border-radius: .5rem; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.5); transition: all .22s; }
+    .soc-btn:hover { border-color: var(--blue); background: var(--bdim); color: var(--blue); }
+    .footer-bottom { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: .5rem; align-items: center; text-align: center; }
+    @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; } }
+    .footer-bottom p { font-size: .78rem; color: var(--grey); }
+
+    /* ============================================================
+       BOTÓN FLOTANTE WHATSAPP
+       Reemplazar 5492614000000 con número real
+    ============================================================ */
+    .wa-fab { position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 600; display: flex; align-items: center; gap: .65rem; background: #25D366; color: #fff; border-radius: 3rem; padding: .875rem 1.35rem; font-family: var(--font); font-size: .9rem; font-weight: 600; box-shadow: 0 6px 24px rgba(37,211,102,.4); transition: transform .22s, box-shadow .22s; }
+    .wa-fab:hover { transform: scale(1.06); box-shadow: 0 8px 30px rgba(37,211,102,.5); }
+    .wa-fab svg  { width: 22px; height: 22px; flex-shrink: 0; }
+    .wa-fab-text { display: none; }
+    @media (min-width: 540px) { .wa-fab-text { display: block; } }
+
+    /* GSAP estado inicial — reveals genéricos */
+    .gs { opacity: 0; transform: translateY(44px); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       MENÚ MOBILE
+  ============================================================ -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+    <button class="mob-close" id="mobClose" aria-label="Cerrar">✕</button>
+    <a href="#modelos"       onclick="closeMenu()">Modelos</a>
+    <a href="#diferenciales" onclick="closeMenu()">Nosotros</a>
+    <a href="#proceso"       onclick="closeMenu()">Proceso</a>
+    <a href="#galeria"       onclick="closeMenu()">Galería</a>
+    <a href="#contacto"      onclick="closeMenu()">Contacto</a>
+    <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos"
+       class="btn btn-primary" target="_blank" rel="noopener" style="margin-top:.5rem;">💬 WhatsApp</a>
+  </div>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#inicio" class="logo">PATAGONA <span>HOME</span></a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#modelos">Modelos</a>
+        <a href="#diferenciales">Nosotros</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#galeria">Galería</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos"
+         class="btn btn-primary hdr-cta" target="_blank" rel="noopener">💬 Consultar</a>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       SECCIÓN 1: HERO
+  ============================================================ -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg" id="heroBg"></div>
+
+    <!-- ★ Camión + título: una sola unidad que entra desde la izquierda ★
+         El carry es [TEXTO izq | CAMIÓN der]. Al deslizar de x=-110vw a 0,
+         el camión (derecha del flex) aparece PRIMERO en el viewport,
+         y el título (izquierda del flex) llega detrás — efecto transporte.
+         mix-blend-mode:multiply funde el fondo blanco del PNG con el bg claro. -->
+    <div class="hero-carry" id="heroCarry">
+      <div class="hero-content">
+        <div class="hero-badge" id="hero-badge"><i></i> Representante oficial · Entrega en toda Argentina</div>
+        <h1 class="hero-title" id="hero-title">
+          <span class="htl">Tu próximo</span>
+          <span class="htl">espacio,</span>
+          <span class="htl"><span class="accent">listo en horas.</span></span>
+        </h1>
+        <p class="hero-sub" id="hero-sub">Módulos habitacionales plegables de nueva generación. Sin obra, sin meses de espera. Viviendas, oficinas y ampliaciones.</p>
+        <div class="hero-ctas" id="hero-ctas">
+          <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos"
+             class="btn btn-primary" target="_blank" rel="noopener" style="font-size:1rem;padding:1rem 2rem;">
+            💬 Consultar por WhatsApp
+          </a>
+          <a href="#modelos" class="btn btn-outline" style="font-size:1rem;padding:1rem 2rem;">Ver modelos ↓</a>
+        </div>
+      </div>
+      <div class="hero-truck-col" aria-hidden="true">
+        <img id="hero-truck" src="inicio.png" alt="">
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN 2: MODELOS
+       Una sola sección — tres modelos con scroll reveal,
+       imagen alternando derecha/izquierda, efectos de texto ricos.
+  ============================================================ -->
+  <section class="modelos-section" id="modelos" style="z-index:2;">
+    <div class="container">
+
+      <!-- Intro de la sección -->
+      <div class="modelos-intro">
+        <span class="eyebrow" id="modelos-eyebrow">Nuestros modelos</span>
+        <h2 class="sec-title" id="modelos-title">
+          Elegí el
+          <span class="hl">módulo<span class="hl-bar" id="hl-modulo"></span></span>
+          que<br>necesitás
+        </h2>
+        <p class="sec-sub" id="modelos-sub">Todos incluyen instalaciones eléctricas, carpinterías y aislación completa. Sin sorpresas.</p>
+      </div>
+
+      <!-- ────────────────────────────────────────────────────────
+           MÓDULO D — imagen desde la DERECHA
+      ──────────────────────────────────────────────────────────── -->
+      <div class="modelo-row txt-first" id="row-d">
+        <div class="mr-row-num">01</div>
+
+        <!-- Texto (izquierda) -->
+        <div class="mr-text" id="text-d">
+          <span class="mr-counter" id="cnt-d">01 / 03</span>
+
+          <h2 class="mr-name" id="name-d">
+            <span class="wc"><span class="wi">Módulo</span></span>
+            <span class="wc"><span class="wi"><span class="hl">D<span class="hl-bar" id="hl-d"></span></span></span></span>
+          </h2>
+
+          <p class="mr-desc" id="desc-d">La solución compacta y más accesible. Ideal para ampliaciones, dormitorios adicionales o estudios. Funcional y bien resuelto en formato mínimo.</p>
+
+          <div class="mr-specs" id="specs-d">
+            <span class="mr-pill">Hasta 20 m²</span>
+            <span class="mr-pill">1 ambiente</span>
+            <span class="mr-pill">Baño opcional</span>
+            <span class="mr-pill">Fácil traslado</span>
+          </div>
+
+          <div class="mr-price-row">
+            <div>
+              <div class="mr-from">Desde</div>
+              <div class="mr-price-val" id="price-d" data-price="$4.200.000"></div>
+            </div>
+            <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20el%20M%C3%B3dulo%20D"
+               class="btn btn-outline" target="_blank" rel="noopener" id="cta-d">Consultar →</a>
+          </div>
+        </div>
+
+        <!-- Video Módulo D -->
+        <div class="mr-img" id="img-d">
+          <div class="mr-img-wrap">
+            <video src="casa.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          </div>
+        </div>
+      </div>
+
+      <!-- ────────────────────────────────────────────────────────
+           MÓDULO V — imagen desde la IZQUIERDA
+      ──────────────────────────────────────────────────────────── -->
+      <div class="modelo-row" id="row-v">
+        <div class="mr-row-num">02</div>
+
+        <!-- Video Módulo V -->
+        <div class="mr-img" id="img-v">
+          <div class="mr-img-wrap">
+            <video src="casa.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          </div>
+        </div>
+
+        <!-- Texto (derecha) -->
+        <div class="mr-text" id="text-v">
+          <span class="mr-counter" id="cnt-v">02 / 03</span>
+
+          <h2 class="mr-name" id="name-v">
+            <span class="wc"><span class="wi">Módulo</span></span>
+            <span class="wc"><span class="wi"><span class="hl">V<span class="hl-bar" id="hl-v"></span></span></span></span>
+          </h2>
+
+          <span class="mr-popular" id="pop-v">★ &nbsp;Más elegido</span>
+
+          <p class="mr-desc" id="desc-v">El preferido para vivienda permanente u oficina profesional. Living integrado con cocina y baño completo. Listo para conectarse a servicios existentes el mismo día.</p>
+
+          <div class="mr-specs" id="specs-v">
+            <span class="mr-pill">Hasta 36 m²</span>
+            <span class="mr-pill">2-3 ambientes</span>
+            <span class="mr-pill">Baño completo</span>
+            <span class="mr-pill">Cocina</span>
+          </div>
+
+          <div class="mr-price-row">
+            <div>
+              <div class="mr-from">Desde</div>
+              <div class="mr-price-val" id="price-v" data-price="$5.500.000"></div>
+            </div>
+            <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20el%20M%C3%B3dulo%20V"
+               class="btn btn-primary" target="_blank" rel="noopener" id="cta-v">Consultar →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ────────────────────────────────────────────────────────
+           MÓDULO X PRO — imagen desde la DERECHA
+      ──────────────────────────────────────────────────────────── -->
+      <div class="modelo-row txt-first" id="row-x">
+        <div class="mr-row-num">03</div>
+
+        <!-- Texto (izquierda) -->
+        <div class="mr-text" id="text-x">
+          <span class="mr-counter" id="cnt-x">03 / 03</span>
+
+          <h2 class="mr-name" id="name-x">
+            <span class="wc"><span class="wi">Módulo</span></span>
+            <span class="wc"><span class="wi"><span class="hl">X <em style="font-style:normal;font-size:.55em;letter-spacing:0;vertical-align:middle;color:var(--blue)">PRO</em><span class="hl-bar" id="hl-x"></span></span></span></span>
+          </h2>
+
+          <p class="mr-desc" id="desc-x">Para grandes proyectos. Oficinas corporativas, locales comerciales o viviendas familiares completas. Combinable en dúplex o configuraciones múltiples a medida.</p>
+
+          <div class="mr-specs" id="specs-x">
+            <span class="mr-pill">Hasta 60 m²</span>
+            <span class="mr-pill">Multi-ambiente</span>
+            <span class="mr-pill">Combinable</span>
+            <span class="mr-pill">Premium</span>
+          </div>
+
+          <div class="mr-price-row">
+            <div>
+              <div class="mr-from">Desde</div>
+              <div class="mr-price-val" id="price-x" data-price="$8.900.000"></div>
+            </div>
+            <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20el%20M%C3%B3dulo%20X%20Pro"
+               class="btn btn-outline" target="_blank" rel="noopener" id="cta-x">Consultar →</a>
+          </div>
+        </div>
+
+        <!-- Video Módulo X -->
+        <div class="mr-img" id="img-x">
+          <div class="mr-img-wrap">
+            <video src="casa.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN 3: DIFERENCIALES
+  ============================================================ -->
+  <section class="section-card diferenciales" id="diferenciales" style="z-index:3;">
+    <div class="container">
+      <div class="dif-intro">
+        <div>
+          <span class="eyebrow gs">Por qué elegirnos</span>
+          <h2 class="sec-title gs">Tecnología que<br><span class="accent">cambia todo</span></h2>
+        </div>
+        <p class="sec-sub gs">No es una casilla prefabricada. Es arquitectura modular de precisión, diseñada para durar décadas y adaptarse a cualquier terreno del país.</p>
+      </div>
+      <div class="dif-grid">
+        <div class="dif-card gs"><div class="dif-icon">⚡</div><div><div class="dif-name">Listo en ~2 horas</div><p class="dif-desc">Se descarga del camión y se despliega solo. Sin excavaciones, sin albañilería, sin meses de espera.</p></div></div>
+        <div class="dif-card gs"><div class="dif-icon">🏗️</div><div><div class="dif-name">Estructura resistente</div><p class="dif-desc">Acero galvanizado y paneles de alta densidad. Soporta sismicidad, viento patagónico y cargas de nieve.</p></div></div>
+        <div class="dif-card gs"><div class="dif-icon">🌡️</div><div><div class="dif-name">Aislante térmico/acústico</div><p class="dif-desc">Lana de roca + barrera de vapor. Confort real desde −20°C hasta +45°C. Ahorro concreto en energía.</p></div></div>
+        <div class="dif-card gs"><div class="dif-icon">🔄</div><div><div class="dif-name">100% adaptable</div><p class="dif-desc">Vivienda, oficina, estudio, local comercial o ampliación. Configuraciones combinables entre sí.</p></div></div>
+        <div class="dif-card gs"><div class="dif-icon">🚚</div><div><div class="dif-name">Entrega en todo el país</div><p class="dif-desc">Desde Mendoza coordinamos la logística hasta tu terreno, en cualquier provincia.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN 4: PROCESO
+  ============================================================ -->
+  <section class="section-card proceso" id="proceso" style="z-index:4;">
+    <div class="container">
+      <div class="proceso-intro">
+        <p class="sec-label">El proceso</p>
+        <h2>Así de simple,<br><span class="accent">así de rápido.</span></h2>
+        <p>De la consulta a tu módulo instalado, en días.</p>
+      </div>
+
+      <div style="position:relative;">
+        <div class="proceso-track-wrap">
+          <div class="proceso-track-bg"></div>
+          <div class="proceso-track-fill" id="procesoFill"></div>
+        </div>
+        <div class="proceso-steps">
+          <div class="paso" id="paso1">
+            <div class="paso-num">01</div>
+            <div class="paso-title">Consultás</div>
+            <div class="paso-desc">Elegís el modelo que necesitás y nos contactás por WhatsApp o web.</div>
+          </div>
+          <div class="paso" id="paso2">
+            <div class="paso-num">02</div>
+            <div class="paso-title">Confirmamos</div>
+            <div class="paso-desc">En 24&nbsp;hs cerramos medidas, ubicación y todos los detalles de entrega.</div>
+          </div>
+          <div class="paso" id="paso3">
+            <div class="paso-num">03</div>
+            <div class="paso-title">Lo despachamos</div>
+            <div class="paso-desc">El módulo sale de fábrica plegado, listo para viajar a cualquier punto del país.</div>
+          </div>
+          <div class="paso" id="paso4">
+            <div class="paso-num">04</div>
+            <div class="paso-title">Instalamos</div>
+            <div class="paso-desc">Llega, se despliega y está habitable el mismo día. Sin obra, sin demoras.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:5rem;">
+        <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos"
+           class="btn btn-primary" target="_blank" rel="noopener">💬 Empezá hoy</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN 5: GALERÍA
+  ============================================================ -->
+  <section class="section-card galeria" id="galeria" style="z-index:5;">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:.5rem;">
+        <span class="eyebrow gs">Galería</span>
+        <h2 class="sec-title gs">Mirá cómo<br><span class="accent">quedan</span></h2>
+        <p class="sec-sub gs" style="margin:0 auto;">Viviendas, oficinas e interiores reales de clientes en toda Argentina.</p>
+      </div>
+      <div class="gal-grid">
+        <div class="gal-item gs"><div class="gal-img" style="background:linear-gradient(135deg,#0a1825 0%,#122035 40%,#081520 100%);">Exterior principal [foto real · 900×900px]</div><div class="gal-overlay"><span class="gal-tag">Vivienda · exterior</span></div></div>
+        <div class="gal-item gs"><div class="gal-img" style="background:linear-gradient(135deg,#1a0f08 0%,#2a1a10 40%,#150a05 100%);">Interior living [foto real · 450×450px]</div><div class="gal-overlay"><span class="gal-tag">Interior · living</span></div></div>
+        <div class="gal-item gs"><div class="gal-img" style="background:linear-gradient(135deg,#08101a 0%,#0d1a28 40%,#050d14 100%);">Vista nocturna [foto real · 450×450px]</div><div class="gal-overlay"><span class="gal-tag">Vista nocturna</span></div></div>
+        <div class="gal-item gs"><div class="gal-img" style="background:linear-gradient(135deg,#181808 0%,#252515 40%,#121205 100%);">Oficina interior [foto real · 900×400px]</div><div class="gal-overlay"><span class="gal-tag">Oficina · interior</span></div></div>
+        <div class="gal-item gs"><div class="gal-img" style="background:linear-gradient(135deg,#0f1518 0%,#182028 40%,#0a1015 100%);">Detalle fachada [foto real · 450×400px]</div><div class="gal-overlay"><span class="gal-tag">Detalle · fachada</span></div></div>
+        <div class="gal-item gs"><div class="gal-img" style="background:linear-gradient(135deg,#0d0815 0%,#150f22 40%,#080510 100%);">Proceso instalación [foto real · 450×400px]</div><div class="gal-overlay"><span class="gal-tag">Instalación</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN 6: PRUEBA SOCIAL
+  ============================================================ -->
+  <section class="section-card social" id="social" style="z-index:6;">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3.5rem;">
+        <span class="eyebrow gs">La comunidad lo dice</span>
+        <h2 class="sec-title gs">Miles de familias<br><span class="accent">ya confían en nosotros</span></h2>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box gs"><div class="stat-num" data-target="19000" data-prefix="+" data-fmt="miles">0</div><div class="stat-label">Seguidores en redes</div></div>
+        <div class="stat-box gs"><div class="stat-num" data-target="500" data-prefix="+">0</div><div class="stat-label">Módulos instalados</div></div>
+        <div class="stat-box gs"><div class="stat-num" data-target="18">0</div><div class="stat-label">Provincias cubiertas</div></div>
+        <div class="stat-box gs"><div class="stat-num" data-target="2" data-suffix=" hs">0</div><div class="stat-label">Tiempo de instalación</div></div>
+      </div>
+      <div class="media-strip gs">
+        <p class="media-label">Los cubrieron en</p>
+        <div class="media-logos">
+          <span class="media-logo">Canal 7 Mendoza</span>
+          <span class="media-logo">MDZ Online</span>
+          <span class="media-logo">Los Andes</span>
+          <span class="media-logo">Télam</span>
+          <span class="media-logo">Canal 9 Cuyo</span>
+          <span class="media-logo">Infobae</span>
+        </div>
+      </div>
+      <div class="testimonios-grid">
+        <div class="testi gs"><div class="testi-stars">★★★★★</div><p class="testi-text">"No lo podía creer. Llegó a las 8 y a las 11 ya estábamos tomando mate adentro. La calidad es impresionante, mucho mejor de lo que esperaba."</p><div class="testi-author"><div class="testi-avatar">MR</div><div><div class="testi-name">Marcelo R.</div><div class="testi-loc">San Juan, Argentina</div></div></div></div>
+        <div class="testi gs"><div class="testi-stars">★★★★★</div><p class="testi-text">"Lo usé como oficina para mi consultora. En dos semanas trabajábamos 4 personas. El aislamiento acústico es buenísimo, no entra el ruido de la calle."</p><div class="testi-author"><div class="testi-avatar">VC</div><div><div class="testi-name">Valeria C.</div><div class="testi-loc">Mendoza, Argentina</div></div></div></div>
+        <div class="testi gs"><div class="testi-stars">★★★★★</div><p class="testi-text">"Era escéptico al principio, pero me lo recomendó un vecino. La atención fue excelente. Hoy tengo un dormitorio extra re-cómodo."</p><div class="testi-author"><div class="testi-avatar">FA</div><div><div class="testi-name">Federico A.</div><div class="testi-loc">Buenos Aires, Argentina</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN 7: CTA FINAL
+  ============================================================ -->
+  <section class="section-card cta-final" id="contacto" style="z-index:7;">
+    <div class="container">
+      <span class="eyebrow gs" style="justify-content:center;display:flex;">Hablemos</span>
+      <h2 class="sec-title gs">¿Listo para tu<br>próximo espacio?</h2>
+      <p class="sec-sub gs">Consultá hoy sin cargo ni compromiso. Un asesor de Patagona Home te responde en minutos.</p>
+      <div class="cta-btns gs">
+        <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos"
+           class="btn btn-primary" target="_blank" rel="noopener" style="font-size:1.05rem;padding:1rem 2.25rem;">💬 Escribinos por WhatsApp</a>
+        <a href="tel:+5492614000000" class="btn btn-outline" style="font-size:1.05rem;padding:1rem 2.25rem;">📞 Llamar</a>
+      </div>
+      <p class="cta-address gs">📍 Godoy Cruz 9400, Mendoza &nbsp;·&nbsp; Lunes a sábado de 9 a 19 hs.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">PATAGONA <span>HOME</span></div>
+          <p>Módulos habitacionales plegables. Representante oficial con entrega en toda Argentina desde Mendoza.</p>
+          <div class="social-row">
+            <a href="#" class="soc-btn" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="#" class="soc-btn" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="#" class="soc-btn" aria-label="Threads"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.028-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.598-2 1.384-1.493 1.888-3.786 1.888-5.955 0-.093-.004-.187-.011-.28H12.34V11.5h9.21c.072.534.109 1.081.109 1.643 0 2.921-.691 5.777-2.488 7.777C17.486 22.968 15.244 24 12.186 24z"/></svg></a>
+            <a href="#" class="soc-btn" aria-label="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Modelos</h4>
+          <ul>
+            <li><a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20el%20M%C3%B3dulo%20D" target="_blank" rel="noopener">Módulo D</a></li>
+            <li><a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20el%20M%C3%B3dulo%20V" target="_blank" rel="noopener">Módulo V</a></li>
+            <li><a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20el%20M%C3%B3dulo%20X%20Pro" target="_blank" rel="noopener">Módulo X Pro</a></li>
+            <li><a href="https://wa.me/5492614000000?text=Hola!%20Necesito%20una%20soluci%C3%B3n%20a%20medida" target="_blank" rel="noopener">A medida</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Usos</h4>
+          <ul>
+            <li><a href="#modelos">Vivienda</a></li>
+            <li><a href="#modelos">Oficina</a></li>
+            <li><a href="#modelos">Ampliación</a></li>
+            <li><a href="#modelos">Local comercial</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="tel:+5492614000000">Llamar</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li style="color:var(--grey);font-size:.78rem;line-height:1.6;margin-top:.25rem;">Godoy Cruz 9400<br>Mendoza, Argentina</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Patagona Home. Todos los derechos reservados.</p>
+        <p>Mendoza, Argentina · Entrega en todo el país</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/5492614000000?text=Hola!%20Quiero%20info%20sobre%20los%20m%C3%B3dulos"
+     class="wa-fab" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="wa-fab-text">¡Consultá ahora!</span>
+  </a>
+
+  <!-- ============================================================
+       LIBRERÍAS
+  ============================================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <script>
+    // ============================================================
+    // LENIS — smooth scroll
+    // ============================================================
+    const lenis = new Lenis({
+      duration: 1.3,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothTouch: false,
+    });
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ============================================================
+    // HEADER
+    // ============================================================
+    const header = document.getElementById('header');
+    ScrollTrigger.create({
+      start: 'top -60px',
+      onEnter:     () => header.classList.add('scrolled'),
+      onLeaveBack: () => header.classList.remove('scrolled'),
+    });
+
+    // ============================================================
+    // HERO
+    // ============================================================
+    gsap.to('#heroBg', {
+      yPercent: 28, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+
+    // ============================================================
+    // HERO — camión + título: UNA UNIDAD que entra desde la izquierda
+    //
+    // #heroCarry es el flex-row [CAMIÓN | TÍTULO].
+    // Al deslizar desde -110vw, el camión (izquierdo) aparece primero
+    // en el viewport y "arrastra" el título (derecho) con él.
+    // El fondo blanco del PNG desaparece con mix-blend-mode:multiply
+    // sobre el gradiente claro del ::before del carry.
+    // ============================================================
+    gsap.set('#heroCarry', { x: '-110vw' });
+    gsap.set(['#hero-badge','#hero-sub','#hero-ctas'], { opacity: 0, y: 18 });
+    gsap.set('.hero-scroll-hint', { opacity: 0 });
+
+    gsap.timeline({ delay: .15 })
+      // Toda la unidad entra desde la izquierda — suave, dramatico
+      .to('#heroCarry', {
+        x: 0,
+        duration: 1.9,
+        ease: 'power3.inOut'
+      })
+      // Al llegar, badge, sub y CTAs aparecen en cascada
+      .to('#hero-badge', { opacity:1, y:0, duration:.65, ease:'power2.out' }, '-=.55')
+      .to('#hero-sub',   { opacity:1, y:0, duration:.85, ease:'power2.out' }, '-=.45')
+      .to('#hero-ctas',  { opacity:1, y:0, duration:.75, ease:'power2.out' }, '-=.6')
+      .to('.hero-scroll-hint', { opacity:1, duration:.6 }, '-=.35');
+
+    // ============================================================
+    // ============================================================
+    // DIF-CARDS — tilt 3D + glow radial que sigue al cursor
+    // ============================================================
+    document.querySelectorAll('.dif-card').forEach(card => {
+      const rotY = gsap.quickTo(card, 'rotateY', { duration: .5, ease: 'power2.out' });
+      const rotX = gsap.quickTo(card, 'rotateX', { duration: .5, ease: 'power2.out' });
+
+      card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const nx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+        const ny = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+        rotY( nx * 14);
+        rotX(-ny * 10);
+        // glow sigue al cursor via custom properties
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        rotY(0); rotX(0);
+      });
+    });
+
+    // HERO — 3D tilt interactivo con el mouse
+    // quickTo permite actualizar el target sin crear nuevas tweens
+    // ============================================================
+    (function () {
+      const truck  = document.getElementById('hero-truck');
+      const heroEl = document.querySelector('.hero');
+      let animating = false;
+
+      const rotY = gsap.quickTo(truck, 'rotateY', { duration: .65, ease: 'power2.out' });
+      const rotX = gsap.quickTo(truck, 'rotateX', { duration: .65, ease: 'power2.out' });
+
+      heroEl.addEventListener('mousemove', (e) => {
+        if (!animating) return;
+        const r    = heroEl.getBoundingClientRect();
+        const nx   = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2); // -1 → 1
+        const ny   = (e.clientY - r.top   - r.height / 2) / (r.height / 2); // -1 → 1
+        rotY( nx *  9);   // ±9° horizontal
+        rotX(-ny *  5);   // ±5° vertical (invertido para que siga el cursor)
+      });
+
+      heroEl.addEventListener('mouseleave', () => {
+        rotY(0); rotX(0);
+      });
+
+      // Habilitar tilt sólo después que termina la animación de entrada
+      gsap.delayedCall(2.2, () => { animating = true; });
+
+      // Flotación sutil continua después de la entrada
+      gsap.to(truck, {
+        y: -10, duration: 2.6, ease: 'sine.inOut',
+        yoyo: true, repeat: -1, delay: 2.2
+      });
+    })();
+
+    // ============================================================
+    // PROCESO — línea de tiempo con activación paso a paso
+    // ============================================================
+    (function () {
+      const fill  = document.getElementById('procesoFill');
+      const pasos = gsap.utils.toArray('.paso');
+      const trigger = { trigger: '.section-card.proceso', start: 'top 30%', toggleActions: 'play none none none' };
+
+      // Línea azul: se dibuja lentamente — 3 segundos
+      gsap.to(fill, {
+        width: '100%', duration: 3.2, ease: 'power1.inOut',
+        scrollTrigger: trigger
+      });
+
+      // Pasos aparecen en cascada muy lenta — 0.55s de stagger
+      gsap.to(pasos, {
+        opacity: 1, y: 0,
+        duration: 1.1, stagger: .55, ease: 'power3.out',
+        scrollTrigger: trigger
+      });
+
+      // Círculos se encienden sincronizados con la línea que pasa por cada uno
+      const litDelays = [.2, .95, 1.7, 2.45];
+      pasos.forEach((p, i) => {
+        ScrollTrigger.create({
+          trigger: '.section-card.proceso', start: 'top 30%',
+          onEnter: () => gsap.delayedCall(litDelays[i], () => p.classList.add('lit'))
+        });
+      });
+    })();
+
+    // ============================================================
+    // SECTION STACK — superposición entre secciones
+    // modelos-section no es sticky (para que los 3 modelos scrolleen
+    // normalmente), pero igual se escala cuando diferenciales la cubre.
+    // ============================================================
+    const modElem  = document.querySelector('.modelos-section');
+    const difElem  = document.querySelector('.diferenciales');
+
+    // Modelos se achica cuando diferenciales entra por abajo
+    gsap.to(modElem, {
+      scale: 0.93, ease: 'none',
+      scrollTrigger: {
+        trigger: difElem,
+        start: 'top bottom',
+        end:   'top top+=1',
+        scrub: true,
+      }
+    });
+
+    // El resto de section-card se apila entre sí
+    gsap.utils.toArray('.section-card').forEach((el, i, arr) => {
+      const next = arr[i + 1];
+      if (!next) return;
+      gsap.to(el, {
+        scale: 0.93,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: next,
+          start: 'top bottom',
+          end:   'top top+=1',
+          scrub: true,
+        }
+      });
+    });
+
+    // ============================================================
+    // UTILIDADES — efectos de texto
+    // ============================================================
+
+    // Divide el texto de un párrafo en palabras con clip para slide-up
+    function splitDescWords(el) {
+      const words = el.textContent.trim().split(/\s+/);
+      el.innerHTML = words
+        .map(w => `<span class="wc"><span class="wi" style="transform:translateY(110%);display:inline-block;">${w}</span></span>`)
+        .join(' ');
+      return el.querySelectorAll('.wi');
+    }
+
+    // Anima las palabras de un párrafo (slide-up stagger) — duraciones lentas
+    function animateWords(el, trigger, startPos = 'top 84%') {
+      const words = splitDescWords(el);
+      gsap.to(words, {
+        y: 0,
+        duration: 1.0,
+        stagger: .038,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: trigger || el, start: startPos, toggleActions: 'play none none none' }
+      });
+    }
+
+    // Typewriter carácter a carácter — ritmo más pausado y visible
+    function typewrite(el, trigger) {
+      const text  = el.dataset.price || '';
+      let   fired = false;
+      el.textContent = '';
+      ScrollTrigger.create({
+        trigger: trigger || el,
+        start: 'top 85%',
+        onEnter: () => {
+          if (fired) return; fired = true;
+          let i = 0;
+          const speed = Math.max(60, 1800 / text.length); // más lento
+          const tick = () => {
+            if (i < text.length) {
+              el.textContent += text[i++];
+              setTimeout(tick, speed);
+            }
+          };
+          tick();
+        }
+      });
+    }
+
+    // Animación de subrayado: se dibuja de izquierda a derecha
+    function animateUnderline(barEl, trigger, delay = 0) {
+      gsap.fromTo(barEl,
+        { width: '0%' },
+        {
+          width: '100%', duration: 1.1, ease: 'power2.out', delay,
+          scrollTrigger: { trigger: trigger || barEl, start: 'top 80%', toggleActions: 'play none none none' }
+        }
+      );
+    }
+
+    // ============================================================
+    // ANIMACIONES INTRO DE MODELOS
+    // ============================================================
+    // Eyebrow
+    gsap.fromTo('#modelos-eyebrow', { opacity:0, y:22 }, { opacity:1, y:0, duration:.7, ease:'power3.out', scrollTrigger:{ trigger:'#modelos-eyebrow', start:'top 85%' } });
+
+    // Título seccionado en palabras (slide-up)
+    const titleWords = document.querySelectorAll('#modelos-title .wc .wi, #modelos-title > .wi');
+    // El título tiene estructura HTML (hl span), así que animamos los .wi dentro de él
+    gsap.fromTo('#modelos-title', { opacity:0, y:40 }, { opacity:1, y:0, duration:1.0, ease:'power3.out', scrollTrigger:{ trigger:'#modelos-title', start:'top 85%' } });
+
+    // Subrayado de "módulo" en el título
+    animateUnderline(document.getElementById('hl-modulo'), '#modelos-title', .6);
+
+    // Subtítulo palabras
+    animateWords(document.getElementById('modelos-sub'), '#modelos-sub', 'top 88%');
+
+    // ============================================================
+    // MODELO D
+    // ============================================================
+    const trigD = '#row-d';
+
+    // Contador — fade simple
+    gsap.fromTo('#cnt-d', { opacity:0, y:14 }, { opacity:1, y:0, duration:.5, ease:'power2.out', scrollTrigger:{ trigger:trigD, start:'top 82%' } });
+
+    // Nombre — words slide-up (ya vienen como .wc/.wi en el HTML)
+    gsap.fromTo('#name-d .wi', { y:'110%' }, {
+      y: '0%', duration: 1.1, stagger: .15, ease:'power4.out',
+      scrollTrigger: { trigger: trigD, start:'top 82%', toggleActions:'play none none none' }
+    });
+
+    // Subrayado de "D"
+    animateUnderline(document.getElementById('hl-d'), trigD, .5);
+
+    // Descripción palabras
+    animateWords(document.getElementById('desc-d'), trigD, 'top 78%');
+
+    // Specs chips
+    gsap.fromTo('#specs-d .mr-pill', { opacity:0, y:18, scale:.95 }, {
+      opacity:1, y:0, scale:1, duration:.5, stagger:.06, ease:'power2.out',
+      scrollTrigger:{ trigger:trigD, start:'top 74%', toggleActions:'play none none none' }
+    });
+
+    // Precio typewriter
+    typewrite(document.getElementById('price-d'), trigD);
+
+    // CTA
+    gsap.fromTo('#cta-d', { opacity:0, y:20 }, {
+      opacity:1, y:0, duration:.55, ease:'power2.out', delay:.1,
+      scrollTrigger:{ trigger:trigD, start:'top 70%', toggleActions:'play none none none' }
+    });
+
+    // Imagen D — entra desde la DERECHA (lenta y dramática)
+    gsap.fromTo('#img-d', { x: 180, opacity:0, scale:1.06 }, {
+      x:0, opacity:1, scale:1, duration:1.8, ease:'power3.out',
+      scrollTrigger:{ trigger:trigD, start:'top 86%', toggleActions:'play none none none' }
+    });
+
+    // ============================================================
+    // MODELO V
+    // ============================================================
+    const trigV = '#row-v';
+
+    gsap.fromTo('#cnt-v', { opacity:0, y:14 }, { opacity:1, y:0, duration:.5, ease:'power2.out', scrollTrigger:{ trigger:trigV, start:'top 82%' } });
+
+    gsap.fromTo('#name-v .wi', { y:'110%' }, {
+      y:'0%', duration:1.1, stagger:.15, ease:'power4.out',
+      scrollTrigger:{ trigger:trigV, start:'top 82%', toggleActions:'play none none none' }
+    });
+
+    animateUnderline(document.getElementById('hl-v'), trigV, .5);
+
+    gsap.fromTo('#pop-v', { opacity:0, scale:.9 }, {
+      opacity:1, scale:1, duration:.5, ease:'back.out(1.5)',
+      scrollTrigger:{ trigger:trigV, start:'top 78%', toggleActions:'play none none none' }
+    });
+
+    animateWords(document.getElementById('desc-v'), trigV, 'top 78%');
+
+    gsap.fromTo('#specs-v .mr-pill', { opacity:0, y:18, scale:.95 }, {
+      opacity:1, y:0, scale:1, duration:.5, stagger:.06, ease:'power2.out',
+      scrollTrigger:{ trigger:trigV, start:'top 74%', toggleActions:'play none none none' }
+    });
+
+    typewrite(document.getElementById('price-v'), trigV);
+
+    gsap.fromTo('#cta-v', { opacity:0, y:20 }, {
+      opacity:1, y:0, duration:.55, ease:'power2.out', delay:.1,
+      scrollTrigger:{ trigger:trigV, start:'top 70%', toggleActions:'play none none none' }
+    });
+
+    // Imagen V — entra desde la IZQUIERDA (lenta y dramática)
+    gsap.fromTo('#img-v', { x:-180, opacity:0, scale:1.06 }, {
+      x:0, opacity:1, scale:1, duration:1.8, ease:'power3.out',
+      scrollTrigger:{ trigger:trigV, start:'top 86%', toggleActions:'play none none none' }
+    });
+
+    // ============================================================
+    // MODELO X
+    // ============================================================
+    const trigX = '#row-x';
+
+    gsap.fromTo('#cnt-x', { opacity:0, y:14 }, { opacity:1, y:0, duration:.5, ease:'power2.out', scrollTrigger:{ trigger:trigX, start:'top 82%' } });
+
+    gsap.fromTo('#name-x .wi', { y:'110%' }, {
+      y:'0%', duration:1.1, stagger:.15, ease:'power4.out',
+      scrollTrigger:{ trigger:trigX, start:'top 82%', toggleActions:'play none none none' }
+    });
+
+    animateUnderline(document.getElementById('hl-x'), trigX, .5);
+
+    animateWords(document.getElementById('desc-x'), trigX, 'top 78%');
+
+    gsap.fromTo('#specs-x .mr-pill', { opacity:0, y:18, scale:.95 }, {
+      opacity:1, y:0, scale:1, duration:.5, stagger:.06, ease:'power2.out',
+      scrollTrigger:{ trigger:trigX, start:'top 74%', toggleActions:'play none none none' }
+    });
+
+    typewrite(document.getElementById('price-x'), trigX);
+
+    gsap.fromTo('#cta-x', { opacity:0, y:20 }, {
+      opacity:1, y:0, duration:.55, ease:'power2.out', delay:.1,
+      scrollTrigger:{ trigger:trigX, start:'top 70%', toggleActions:'play none none none' }
+    });
+
+    // Imagen X — entra desde la DERECHA (lenta y dramática)
+    gsap.fromTo('#img-x', { x:180, opacity:0, scale:1.06 }, {
+      x:0, opacity:1, scale:1, duration:1.8, ease:'power3.out',
+      scrollTrigger:{ trigger:trigX, start:'top 86%', toggleActions:'play none none none' }
+    });
+
+    // ============================================================
+    // REVEALS GENÉRICOS .gs — otras secciones
+    // ============================================================
+    gsap.utils.toArray('.gs').forEach(el => {
+      gsap.fromTo(el,
+        { opacity:0, y:44 },
+        { opacity:1, y:0, duration:.85, ease:'power3.out',
+          scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' } }
+      );
+    });
+
+    [
+      ['.dif-card',  '.dif-grid',        .09],
+      ['.paso',      '.pasos-grid',       .13],
+      ['.gal-item',  '.gal-grid',         .07],
+      ['.testi',     '.testimonios-grid', .11],
+    ].forEach(([sel, trg, stagger]) => {
+      gsap.fromTo(sel,
+        { opacity:0, y:48, scale:.97 },
+        { opacity:1, y:0, scale:1, duration:.8, stagger, ease:'power3.out',
+          scrollTrigger:{ trigger:trg, start:'top 85%', toggleActions:'play none none none' } }
+      );
+    });
+
+    // ============================================================
+    // CONTADOR ANIMADO
+    // ============================================================
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const miles  = el.dataset.fmt === 'miles';
+      let fired = false;
+      ScrollTrigger.create({ trigger:el, start:'top 88%',
+        onEnter: () => {
+          if (fired) return; fired = true;
+          const obj = { v: 0 };
+          gsap.to(obj, { v:target, duration:2.2, ease:'power2.out',
+            onUpdate()  { el.textContent = prefix + (miles ? Math.floor(obj.v).toLocaleString('es-AR') : Math.floor(obj.v)) + suffix; },
+            onComplete(){ el.textContent = prefix + (miles ? target.toLocaleString('es-AR') : target) + suffix; }
+          });
+        }
+      });
+    });
+
+    // ============================================================
+    // SMOOTH SCROLL — anclas
+    // ============================================================
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); lenis.scrollTo(t, { offset:-72, duration:1.2 }); }
+      });
+    });
+
+    // ============================================================
+    // MENÚ MOBILE
+    // ============================================================
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburger  = document.getElementById('hamburger');
+    const mobClose   = document.getElementById('mobClose');
+    function openMenu()  { mobileMenu.classList.add('open'); document.body.style.overflow='hidden'; hamburger.setAttribute('aria-expanded','true'); }
+    function closeMenu() { mobileMenu.classList.remove('open'); document.body.style.overflow=''; hamburger.setAttribute('aria-expanded','false'); }
+    hamburger.addEventListener('click', openMenu);
+    mobClose.addEventListener('click', closeMenu);
+    mobileMenu.addEventListener('click', e => { if (e.target===mobileMenu) closeMenu(); });
+    document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
+  </script>
+</body>
+</html>

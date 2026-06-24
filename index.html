@@ -1264,25 +1264,26 @@
       });
     }
 
-    // Typewriter carácter a carácter — ritmo más pausado y visible
+    // Precio contando de 0 al valor final con GSAP (RAF, sin setTimeout)
+    function formatARS(n) {
+      return '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
     function typewrite(el, trigger) {
-      const text  = el.dataset.price || '';
-      let   fired = false;
-      el.textContent = '';
+      const raw = (el.dataset.price || '').replace(/[^0-9]/g, '');
+      const target = parseInt(raw, 10);
+      if (!target) return;
+      el.textContent = '$0';
+      const obj = { val: 0 };
       ScrollTrigger.create({
         trigger: trigger || el,
         start: 'top 85%',
         onEnter: () => {
-          if (fired) return; fired = true;
-          let i = 0;
-          const speed = Math.max(60, 1800 / text.length); // más lento
-          const tick = () => {
-            if (i < text.length) {
-              el.textContent += text[i++];
-              setTimeout(tick, speed);
-            }
-          };
-          tick();
+          gsap.to(obj, {
+            val: target,
+            duration: 1.8,
+            ease: 'power2.out',
+            onUpdate() { el.textContent = formatARS(obj.val); }
+          });
         }
       });
     }

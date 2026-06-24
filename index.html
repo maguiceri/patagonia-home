@@ -1476,19 +1476,25 @@
 
     // ============================================================
     // SMOOTH SCROLL — anclas
-    // Usamos offsetTop (posición natural en DOM) y no getBoundingClientRect,
-    // porque las secciones sticky siempre devuelven top:0 cuando están en pantalla,
-    // lo que hace que Lenis piense que ya llegó y no se mueva (falla al navegar atrás).
+    // Cacheamos posiciones naturales al cargar (scroll=0), antes de que sticky entre en juego.
+    // En mid-scroll, secciones sticky devuelven getBoundingClientRect().top=0, lo que engaña
+    // a lenis.scrollTo(element) haciéndole creer que ya llegó. Con el cache del top inicial
+    // funciona en cualquier dirección (adelante y atrás).
     // ============================================================
-    function absoluteOffsetTop(el) {
-      let top = 0;
-      while (el) { top += el.offsetTop; el = el.offsetParent; }
-      return top;
-    }
+    const sectionTops = new Map();
+    document.querySelectorAll('section[id]').forEach(el => {
+      sectionTops.set(el.id, el.getBoundingClientRect().top + window.scrollY);
+    });
+
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); lenis.scrollTo(absoluteOffsetTop(t) - 72, { duration: 1.2 }); }
+        const href = a.getAttribute('href');
+        const id = href.slice(1);
+        const t = id ? document.querySelector(href) : null;
+        if (!t) return;
+        e.preventDefault();
+        const top = sectionTops.has(id) ? sectionTops.get(id) : (t.getBoundingClientRect().top + lenis.scroll);
+        lenis.scrollTo(top - 72, { duration: 1.2 });
       });
     });
 

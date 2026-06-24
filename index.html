@@ -1270,10 +1270,12 @@
       if (!text) return;
       el.textContent = '';
       const charDelay = Math.max(0.055, 1.6 / text.length);
+      let fired = false;
       ScrollTrigger.create({
         trigger: trigger || el,
         start: 'top 85%',
         onEnter: () => {
+          if (fired) return; fired = true;
           text.split('').forEach((char, i) => {
             gsap.delayedCall(i * charDelay, () => { el.textContent += char; });
           });

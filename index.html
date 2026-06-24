@@ -211,8 +211,8 @@
     /* ============================================================
        SECCIÓN: PROCESO — línea de tiempo paso a paso
     ============================================================ */
-    .section-card.proceso { padding: 7rem 0 8rem; }
-    .proceso-intro { text-align: center; margin-bottom: 5rem; }
+    .section-card.proceso { padding: clamp(2rem, 5svh, 7rem) 0 clamp(2rem, 5svh, 8rem); }
+    .proceso-intro { text-align: center; margin-bottom: clamp(1.5rem, 4svh, 5rem); }
     .proceso-intro .sec-label { margin-bottom: .75rem; }
     .proceso-intro h2 { font-size: clamp(2rem,4.5vw,3.4rem); font-weight:700; letter-spacing:-.03em; }
     .proceso-intro p { color: rgba(255,255,255,.5); font-size: 1.05rem; margin-top: .75rem; }
@@ -397,8 +397,8 @@
     /* ============================================================
        SECCIÓN 3: DIFERENCIALES
     ============================================================ */
-    .diferenciales { background: var(--dark); padding: 6rem 0; z-index: 3; }
-    .dif-intro { display: grid; gap: 1.5rem; margin-bottom: 3.5rem; }
+    .diferenciales { background: var(--dark); padding: clamp(1.5rem, 5svh, 6rem) 0; z-index: 3; }
+    .dif-intro { display: grid; gap: 1.5rem; margin-bottom: clamp(1.5rem, 3svh, 3.5rem); }
     @media (min-width: 768px) { .dif-intro { grid-template-columns: 1fr 1fr; align-items: end; } }
     .dif-grid {
       display: grid;
@@ -468,7 +468,7 @@
     .paso { padding: 2.25rem 0; position: relative; display: flex; flex-direction: column; gap: .75rem; }
     .paso:not(:last-child) { border-bottom: 1px solid var(--border); }
     @media (min-width: 768px) { .paso { padding: 0 2rem; } .paso:not(:last-child) { border-bottom: none; border-right: 1px solid var(--border); } .paso:not(:last-child)::after { content:'→'; position:absolute; right:-.75rem; top:1.4rem; font-size:1rem; color:rgba(0,153,255,.35); z-index:1; } }
-    .paso-num   { font-size: 3.5rem; font-weight: 700; line-height: 1; color: rgba(0,153,255,.12); letter-spacing: -.05em; margin-bottom: .5rem; }
+    .paso-num   { font-size: clamp(2rem, 4svh, 3.5rem); font-weight: 700; line-height: 1; color: rgba(0,153,255,.12); letter-spacing: -.05em; margin-bottom: .5rem; }
     .paso-emoji { font-size: 1.75rem; }
     .paso-name  { font-size: 1rem; font-weight: 600; }
     .paso-text  { font-size: .83rem; color: var(--grey); line-height: 1.7; }
@@ -476,9 +476,9 @@
     /* ============================================================
        SECCIÓN 5: GALERÍA
     ============================================================ */
-    .galeria { background: var(--dark); padding: 6rem 0; z-index: 5; }
-    .gal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: 2.75rem; }
-    @media (min-width: 768px) { .gal-grid { grid-template-columns: repeat(4,1fr); grid-template-rows: 210px 210px; } .gal-item:nth-child(1) { grid-column: span 2; grid-row: span 2; } .gal-item:nth-child(4) { grid-column: span 2; } }
+    .galeria { background: var(--dark); padding: clamp(1.5rem, 5svh, 6rem) 0; z-index: 5; }
+    .gal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: clamp(1rem, 2svh, 2.75rem); }
+    @media (min-width: 768px) { .gal-grid { grid-template-columns: repeat(4,1fr); grid-template-rows: clamp(120px, 16svh, 210px) clamp(120px, 16svh, 210px); } .gal-item:nth-child(1) { grid-column: span 2; grid-row: span 2; } .gal-item:nth-child(4) { grid-column: span 2; } }
     .gal-item { border-radius: .75rem; overflow: hidden; cursor: pointer; position: relative; }
     /*
       IMÁGENES GALERÍA:
@@ -496,13 +496,13 @@
     /* ============================================================
        SECCIÓN 6: PRUEBA SOCIAL
     ============================================================ */
-    .social { background: var(--black); padding: 6rem 0; z-index: 6; }
-    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+    .social { background: var(--black); padding: clamp(1.5rem, 5svh, 6rem) 0; z-index: 6; }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: clamp(1.5rem, 3.5svh, 4rem); }
     @media (min-width: 640px) { .stats-row { grid-template-columns: repeat(4,1fr); } }
     .stat-box  { text-align: center; }
     .stat-num  { font-size: clamp(2.2rem,5vw,3.2rem); font-weight: 700; color: var(--blue); letter-spacing: -.04em; line-height: 1; }
     .stat-label{ font-size: .75rem; color: var(--grey); margin-top: .5rem; text-transform: uppercase; letter-spacing: .1em; }
-    .media-strip  { border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem 2rem; margin-bottom: 4rem; }
+    .media-strip  { border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem 2rem; margin-bottom: clamp(1rem, 3svh, 4rem); }
     .media-label  { font-size: .68rem; color: var(--grey); text-transform: uppercase; letter-spacing: .18em; text-align: center; margin-bottom: 1.5rem; }
     .media-logos  { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.75rem 3rem; }
     /*
@@ -524,10 +524,10 @@
     /* ============================================================
        SECCIÓN 7: CTA FINAL
     ============================================================ */
-    .cta-final { padding: 7rem 0; text-align: center; position: relative; overflow: hidden; background: var(--dark); z-index: 7; }
+    .cta-final { padding: clamp(2rem, 5svh, 7rem) 0; text-align: center; position: relative; overflow: hidden; background: var(--dark); z-index: 7; }
     .cta-final::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle,rgba(0,153,255,.07) 0%,transparent 65%); pointer-events: none; }
     .cta-final .sec-title { max-width: 680px; margin: 0 auto 1.1rem; }
-    .cta-final .sec-sub   { margin: 0 auto 2.75rem; text-align: center; }
+    .cta-final .sec-sub   { margin: 0 auto clamp(1rem, 2.5svh, 2.75rem); text-align: center; }
     .cta-btns    { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
     .cta-address { font-size: .8rem; color: var(--grey); margin-top: 2rem; }
 

@@ -1264,25 +1264,18 @@
       });
     }
 
-    // Precio contando de 0 al valor final con GSAP (RAF, sin setTimeout)
-    function formatARS(n) {
-      return '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
+    // Typewriter carácter a carácter usando gsap.delayedCall (RAF, sin setTimeout)
     function typewrite(el, trigger) {
-      const raw = (el.dataset.price || '').replace(/[^0-9]/g, '');
-      const target = parseInt(raw, 10);
-      if (!target) return;
-      el.textContent = '$0';
-      const obj = { val: 0 };
+      const text = el.dataset.price || '';
+      if (!text) return;
+      el.textContent = '';
+      const charDelay = Math.max(0.055, 1.6 / text.length);
       ScrollTrigger.create({
         trigger: trigger || el,
         start: 'top 85%',
         onEnter: () => {
-          gsap.to(obj, {
-            val: target,
-            duration: 1.8,
-            ease: 'power2.out',
-            onUpdate() { el.textContent = formatARS(obj.val); }
+          text.split('').forEach((char, i) => {
+            gsap.delayedCall(i * charDelay, () => { el.textContent += char; });
           });
         }
       });

@@ -1476,11 +1476,19 @@
 
     // ============================================================
     // SMOOTH SCROLL — anclas
+    // Usamos offsetTop (posición natural en DOM) y no getBoundingClientRect,
+    // porque las secciones sticky siempre devuelven top:0 cuando están en pantalla,
+    // lo que hace que Lenis piense que ya llegó y no se mueva (falla al navegar atrás).
     // ============================================================
+    function absoluteOffsetTop(el) {
+      let top = 0;
+      while (el) { top += el.offsetTop; el = el.offsetParent; }
+      return top;
+    }
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); lenis.scrollTo(t, { offset:-72, duration:1.2 }); }
+        if (t) { e.preventDefault(); lenis.scrollTo(absoluteOffsetTop(t) - 72, { duration: 1.2 }); }
       });
     });
 

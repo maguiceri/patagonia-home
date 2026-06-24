@@ -131,6 +131,10 @@
       overflow: hidden;
       transform-origin: top center;
       will-change: transform;
+      /* Mínimo 100svh: la siguiente sección sólo aparece
+         cuando el usuario ya scrolleó el alto completo de esta */
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: center;
     }
 
     /* ============================================================
@@ -565,12 +569,14 @@
     ============================================================ */
     @media (max-width: 767px) {
 
-      /* Deshabilitar sticky en secciones — en mobile el contenido largo
-         quedaría cortado detrás de la siguiente sección */
+      /* Deshabilitar sticky en secciones — en mobile las secciones fluyen normal */
       .section-card {
         position: relative !important;
         border-radius: 0 !important;
-        transform: none !important; /* anula el scale de GSAP */
+        transform: none !important;
+        min-height: unset !important;
+        display: block !important;
+        justify-content: unset !important;
       }
 
       /* Reducir paddings generales de sección */

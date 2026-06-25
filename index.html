@@ -496,14 +496,15 @@
     /* ============================================================
        SECCIÓN 6: PRUEBA SOCIAL
     ============================================================ */
-    .social { background: var(--black); padding: clamp(1.5rem, 5svh, 6rem) 0; z-index: 6; }
-    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: clamp(1.5rem, 3.5svh, 4rem); }
+    .social { background: var(--black); padding: clamp(1rem, 4svh, 6rem) 0; z-index: 6; }
+    .social-intro { text-align: center; margin-bottom: clamp(1rem, 2.5svh, 3.5rem); }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: clamp(1rem, 2.5svh, 4rem); }
     @media (min-width: 640px) { .stats-row { grid-template-columns: repeat(4,1fr); } }
     .stat-box  { text-align: center; }
     .stat-num  { font-size: clamp(2.2rem,5vw,3.2rem); font-weight: 700; color: var(--blue); letter-spacing: -.04em; line-height: 1; }
     .stat-label{ font-size: .75rem; color: var(--grey); margin-top: .5rem; text-transform: uppercase; letter-spacing: .1em; }
-    .media-strip  { border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem 2rem; margin-bottom: clamp(1rem, 3svh, 4rem); }
-    .media-label  { font-size: .68rem; color: var(--grey); text-transform: uppercase; letter-spacing: .18em; text-align: center; margin-bottom: 1.5rem; }
+    .media-strip  { border: 1px solid var(--border); border-radius: 1rem; padding: clamp(.75rem, 1.5svh, 1.75rem) 2rem; margin-bottom: clamp(.75rem, 2svh, 4rem); }
+    .media-label  { font-size: .68rem; color: var(--grey); text-transform: uppercase; letter-spacing: .18em; text-align: center; margin-bottom: clamp(.75rem, 1.5svh, 1.5rem); }
     .media-logos  { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.75rem 3rem; }
     /*
       LOGOS MEDIOS: reemplazar cada span por <img> PNG blanco (height: 24-28px).
@@ -512,7 +513,7 @@
     .media-logo:hover { color: rgba(255,255,255,.45); }
     .testimonios-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
     @media (min-width: 640px) { .testimonios-grid { grid-template-columns: repeat(3,1fr); } }
-    .testi { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color .25s; }
+    .testi { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: clamp(.9rem, 1.5svh, 1.75rem); display: flex; flex-direction: column; gap: clamp(.5rem, 1svh, 1rem); transition: border-color .25s; }
     .testi:hover { border-color: rgba(0,153,255,.22); }
     .testi-stars  { color: var(--blue); font-size: .9rem; letter-spacing: .1em; }
     .testi-text   { font-size: .875rem; color: rgba(255,255,255,.7); line-height: 1.7; flex: 1; }
@@ -959,7 +960,7 @@
   ============================================================ -->
   <section class="section-card social" id="social" style="z-index:6;">
     <div class="container">
-      <div style="text-align:center;margin-bottom:3.5rem;">
+      <div class="social-intro">
         <span class="eyebrow gs">La comunidad lo dice</span>
         <h2 class="sec-title gs">Miles de familias<br><span class="accent">ya confían en nosotros</span></h2>
       </div>
